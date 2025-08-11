@@ -10,6 +10,14 @@ services:
         - RUNTIME=cpu
     ports:
       - "${PORT:-8004}:8004"
+    networks:
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.<unique-name>.rule=Host(`your-domain.com`)"
+      - "traefik.http.routers.<unique-name>.entrypoints=websecure"
+      - "traefik.http.routers.<unique-name>.tls.certResolver=letsencrypt"
+      - "traefik.http.services.<unique-name>.loadbalancer.server.port=3000"
     volumes:
       # Mount local config file for persistence
       - ./config.yaml:/app/config.yaml
@@ -29,3 +37,7 @@ services:
 # Define the named volume for the Hugging Face cache
 volumes:
   hf_cache:
+# Dokploy config
+networks:
+  dokploy-network:
+    external: true
