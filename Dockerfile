@@ -10,7 +10,8 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV HF_HOME=/app/hf_cache
 
 # Install system dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update
+RUN apt-get install -y --no-install-recommends \
     build-essential \
     libsndfile1 \
     ffmpeg \
